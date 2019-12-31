@@ -1,10 +1,9 @@
 import Post, { IPost } from '../models/Post';
-import PostService from '../services/PostService';
 
 class postRepository {
   public async store(post: IPost, foto: any): Promise<any> {
     try {
-      const newPost = await PostService.createPost(post, foto);
+      const newPost = await Post.create({ post, foto });
       return newPost;
     } catch (err) {
       throw err;
@@ -13,8 +12,8 @@ class postRepository {
 
   public async index(): Promise<any> {
     try {
-      const list = PostService.getAll();
-      return list;
+      const posts = await Post.find();
+      return posts;
     } catch (err) {
       throw err;
     }
@@ -22,7 +21,7 @@ class postRepository {
 
   public async show(id: string): Promise<any> {
     try {
-      const post = PostService.getOne(id);
+      const post = await Post.findById(id);
       return post;
     } catch (err) {
       throw err;
@@ -31,7 +30,7 @@ class postRepository {
 
   public async delete(id: string): Promise<boolean> {
     try {
-      await PostService.delete(id);
+      await Post.findByIdAndDelete(id);
       return true;
     } catch (err) {
       throw err;
@@ -40,7 +39,7 @@ class postRepository {
 
   public async update(id: string, post: IPost): Promise<any> {
     try {
-      const updatedPost = await PostService.update(id, post);
+      const updatedPost = await Post.findByIdAndUpdate(id, post);
       return updatedPost;
     } catch (err) {
       throw err;

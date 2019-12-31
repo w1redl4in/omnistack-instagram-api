@@ -1,4 +1,4 @@
-import express, { Response, NextFunction } from 'express';
+import express from 'express';
 import mongoose from 'mongoose';
 import routes from './routes';
 import IO from 'socket.io';

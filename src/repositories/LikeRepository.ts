@@ -1,19 +1,22 @@
 import Post from '../models/Post';
-import LikeService from '../services/LikeService';
 
 class LikeRepository {
-  public async like(id: string): Promise<string> {
+  public async like(id: string): Promise<any> {
     try {
-      const post = await LikeService.like(id);
+      const post: any = await Post.findById(id);
+      post.likes += 1;
+      await post.save();
       return post;
     } catch (err) {
       throw err;
     }
   }
 
-  public async deslike(id: string): Promise<string> {
+  public async deslike(id: string): Promise<any> {
     try {
-      const post = await LikeService.deslike(id);
+      const post: any = await Post.findById(id);
+      post.likes >= 1 ? (post.likes -= 1) : post.likes;
+      await post.save();
       return post;
     } catch (err) {
       throw err;
